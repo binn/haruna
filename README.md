@@ -30,7 +30,8 @@ docker run -d -e HARUNA_TOKEN="YOUR_BOTS_TOKEN_HERE" \
 -e HARUNA_MUTE="MUTE_ROLE_ID" \
 -e HARUNA_PREFIX="BOT_PREFIX" \
 -e HARUNA_MODS="MOD_IDS" \
--e HARUNA_CHANNELS="CHANNEL_IDS" binzy/haruna
+-e HARUNA_CHANNELS="CHANNEL_IDS" \
+-e HARUNA_GAMES="being a good mod;splitting users;thanos did nothing wrong.;?!?!" binzy/haruna
 ```
 
 <small><b>Quick note:</b> Docker environment files are also compatible.</small>
@@ -44,6 +45,7 @@ docker run -d -e HARUNA_TOKEN="YOUR_BOTS_TOKEN_HERE" \
 | `HARUNA_MUTE` | The ID of the role to give to muted users. |
 | `HARUNA_MODS` | A list of role IDs seperated by a semicolon (`;`) that have moderation permissions |
 | `HARUNA_CHANNELS` | A list of channel IDs seperated by a semicolon (`;`) that will get locked when using the `lock all` command. |
+| `HARUNA_GAMES` | A list of strings seperated by a semicolon (`;`) that will represent the bot's "Playing" tag. Updates every 5 minutes |
 
 ## Commands
 

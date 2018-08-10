@@ -32,6 +32,7 @@ namespace Haruna
         private static string[] _modIds;
         private static string _botPrefix;
         private static string _muteRoleId;
+        private static string[] _playingStatusLoop;
         private static string[] _lockableChannelIds;
 
         public static string[] ModIds => _modIds;
@@ -39,12 +40,14 @@ namespace Haruna
         public static string BotPrefix => _botPrefix;
         public static string MuteRoleId => _muteRoleId;
         public static string[] LockableChannelIds => _lockableChannelIds;
+        public static string[] PlayingStatusMessages => _playingStatusLoop;
 
         public static void LoadConfiguration()
         {
             string unParsedModIds = Environment.GetEnvironmentVariable("HARUNA_MODS");
             string localBotToken = Environment.GetEnvironmentVariable("HARUNA_TOKEN");
             string userMutedRoleId = Environment.GetEnvironmentVariable("HARUNA_MUTE");
+            string unParsedPlaying = Environment.GetEnvironmentVariable("HARUNA_GAMES");
             string localBotPrefix = Environment.GetEnvironmentVariable("HARUNA_PREFIX");
             string lockChannelIds = Environment.GetEnvironmentVariable("HARUNA_CHANNELS");
 
@@ -61,6 +64,15 @@ namespace Haruna
             if (!string.IsNullOrWhiteSpace(userMutedRoleId))
             {
                 _muteRoleId = userMutedRoleId;
+            }
+
+            if(!string.IsNullOrWhiteSpace(unParsedPlaying))
+            {
+                _playingStatusLoop = unParsedPlaying.Split(';');
+            }
+            else
+            {
+                _playingStatusLoop = new string[0];
             }
 
             if (!string.IsNullOrWhiteSpace(unParsedModIds))

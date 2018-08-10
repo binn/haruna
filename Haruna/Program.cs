@@ -72,6 +72,7 @@ namespace Haruna
             _logger.LogDebug("Haruna has been loaded with all modules and commands.");
             await _client.LoginAsync(TokenType.Bot, GlobalConfiguration.BotToken, validateToken: true);
             await _client.StartAsync();
+            await HandlePlayingTagsAsync();
 
             _logger.LogInformation("Haruna has started and is running.");
             await Task.Delay(-1);
@@ -139,6 +140,18 @@ namespace Haruna
                         break;
                     default:
                         break;
+                }
+            }
+        }
+
+        private static async Task HandlePlayingTagsAsync()
+        {
+            while (true)
+            {
+                for (int i = 0; i < GlobalConfiguration.PlayingStatusMessages.Length; i++)
+                {
+                    await _client.SetGameAsync(GlobalConfiguration.PlayingStatusMessages[i]);
+                    await Task.Delay(60 * 1000);
                 }
             }
         }
