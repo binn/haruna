@@ -23,7 +23,7 @@ namespace Haruna.Modules
         {
             IRole role = Context.Guild.GetRole(ulong.Parse(GlobalConfiguration.MuteRoleId));
             await user.AddRoleAsync(role);
-            await ReplyAsync(user.ToString() + " has been muted hahahaa ehehe !!! he's getting his punishment from my onii-sama >////< *aishiteru*");
+            await ReplyAsync("`" + user.ToString() + "` has been muted hahahaa ehehe !!! he's getting his punishment from my onii-sama >////< *aishiteru*");
 
             _logger.LogInformation(Context.User.ToString() + " muted user `" + user.ToString() + "` indefinetely.");
         }
@@ -44,7 +44,7 @@ namespace Haruna.Modules
                     _logger.LogInformation("INTERNAL_SYSTEM unmuted user " + user.ToString() + " after " + timeout.TotalMinutes + " minutes.");
                 });
 
-                await ReplyAsync(user.ToString() + " has been muted hahahaa ehehe !!! he's getting his punishment from my onii-sama >////< *aishiteru*");
+                await ReplyAsync("`" + user.ToString() + "` has been muted hahahaa ehehe !!! he's getting his punishment from my onii-sama >////< *aishiteru*");
             });
 
             _logger.LogInformation(Context.User.ToString() + " muted user `" + user.ToString() + "` for " + timeout.TotalMinutes + " minutes.");
