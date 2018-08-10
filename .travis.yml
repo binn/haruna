@@ -11,8 +11,14 @@ branches:
 services:
   - docker
 
+before_install: 
+  - sudo apt-get update
+
+install:
+  - travis_retry dotnet restore
+
 script:
-  - dotnet build
+  - travis_retry dotnet build
 # Soon we'll setup tests. For now just implement building and publish to docker.
 
 after_script: # This won't run if dotnet build fails.
