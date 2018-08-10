@@ -44,6 +44,7 @@ namespace Haruna
 
         public static async Task Main(string[] args)
         {
+            await GlobalEvents.PrintStartupMessage();
             GlobalConfiguration.LoadConfiguration();
             _services = ConfigureServices(new ServiceCollection());
             _logger = _services.GetRequiredService<ILogger<Program>>();

@@ -23,8 +23,6 @@
 /* Author: https://github.com/binsenpai */
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using Discord.WebSocket;
 
@@ -36,6 +34,35 @@ namespace Haruna
         {
             return Task.CompletedTask;
             //throw new NotImplementedException();
+        }
+
+        public static async Task PrintStartupMessage()
+        {
+            Console.WriteLine(HarunaWelcome.WelcomeString);
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.WriteLine("Hello from Haruna!");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+
+            string defaultEnder = "]";
+            string defaultStarter = "[=";
+            int sizeOffset = defaultEnder.Length;
+            int currentSize = defaultStarter.Length;
+
+            Console.Write(defaultStarter);
+            Console.CursorLeft = currentSize + 30 + defaultEnder.Length;
+            Console.Write(defaultEnder);
+            Console.CursorLeft = defaultStarter.Length;
+
+            for (int i = 0; i < 30; i++)
+            {
+                Console.CursorLeft = currentSize;
+                Console.Write("=>");
+                currentSize++;
+                await Task.Delay(new Random().Next(30, 256));
+            }
+
+            Console.Write(defaultEnder + Environment.NewLine);
+            Console.ResetColor();
         }
     }
 }
