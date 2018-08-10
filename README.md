@@ -16,12 +16,10 @@ docker run -d -e HARUNA_TOKEN="YOUR_BOTS_TOKEN_HERE" \
 -e HARUNA_MUTE="MUTE_ROLE_ID" \
 -e HARUNA_PREFIX="BOT_PREFIX" \
 -e HARUNA_MODS="MOD_IDS" \
--e HARUNA_CHANNELS="CHANNEL_IDS" \ binzy/haruna
+-e HARUNA_CHANNELS="CHANNEL_IDS" binzy/haruna
 ```
 
-<small> 
-    Quick note: Docker environment files are also compatible.
-</small>
+<small><b>Quick note:</b> Docker environment files are also compatible.</small>
 
 **Note**: Haruna's responses contain vulgar language that isn't acceptable in some areas, please modify the source code if you'd like this removed. In the future these vulgar responses will be removed from her.
 
