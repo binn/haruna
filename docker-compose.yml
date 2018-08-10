@@ -1,0 +1,6 @@
+version: '2'
+
+services:
+  bot:
+    image: binzy/haruna
+    command: dotnet Haruna.dll

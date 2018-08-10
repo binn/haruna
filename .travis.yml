@@ -1,0 +1,19 @@
+sudo: required
+
+language: csharp
+mono: none
+dotnet: 2.1.1
+
+services:
+  - docker
+
+install:
+  - dotnet restore
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - docker build -t binzy/haruna .
+  - docker push binzy/haruna
+
+
+script:
+  - dotnet build
+# Soon we'll setup tests. For now just implement building and publish to docker.

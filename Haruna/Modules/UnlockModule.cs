@@ -67,7 +67,7 @@ namespace Haruna.Modules
             }
 
             await ReplyAsync("all the chawnnels hawv bween unlocked~!! uwu p-please reward me.. ///");
-            _logger.LogInformation(Context.User.ToString() + " unlocked all channels [" + string.Join(", ", GlobalConfiguration.LockableChannelIds) + "].");
+            _logger.LogInformation(Context.User.ToString() + " unlocked all channels [ " + string.Join(", ", GlobalConfiguration.LockableChannelIds) + " ].");
         }
     }
 }

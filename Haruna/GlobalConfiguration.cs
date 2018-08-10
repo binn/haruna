@@ -29,9 +29,9 @@ namespace Haruna
                 _botToken = localBotToken;
             }
 
-            if(!string.IsNullOrWhiteSpace(userMutedRoleId))
+            if(!string.IsNullOrWhiteSpace(localBotPrefix))
             {
-                _muteRoleId = userMutedRoleId;
+                _botPrefix = localBotPrefix;
             }
 
             if (!string.IsNullOrWhiteSpace(userMutedRoleId))

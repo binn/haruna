@@ -7,7 +7,7 @@ using Haruna;
 
 public class RequireModAttribute : PreconditionAttribute
 {
-    public async override Task<PreconditionResult> CheckPermissions(ICommandContext context, CommandInfo command, IServiceProvider services)
+    public override Task<PreconditionResult> CheckPermissions(ICommandContext context, CommandInfo command, IServiceProvider services)
     {
         bool isAuthorized = false;
         IGuildUser user = (IGuildUser)context.User;
@@ -23,11 +23,11 @@ public class RequireModAttribute : PreconditionAttribute
 
         if (isAuthorized)
         {
-            return PreconditionResult.FromSuccess();
+            return Task.FromResult(PreconditionResult.FromSuccess());
         }
         else
         {
-            return PreconditionResult.FromError("uh oh !!! senpai told me not to let you touch me. >////< srry i can't suck your cock :((((");
+            return Task.FromResult(PreconditionResult.FromError("uh oh !!! senpai told me not to let you touch me. >////< srry i can't suck your cock :(((("));
         }
     }
 }

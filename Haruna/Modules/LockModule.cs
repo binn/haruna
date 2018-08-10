@@ -67,7 +67,7 @@ namespace Haruna.Modules
             }
 
             await ReplyAsync("wakarimashita~! i l-locked all the c-c-chawnyls fowr you.. s-s-senpai!! \\o/");
-            _logger.LogInformation(Context.User.ToString() + " locked all channels [" + string.Join(", ", GlobalConfiguration.LockableChannelIds) + "].");
+            _logger.LogInformation(Context.User.ToString() + " locked all channels [ " + string.Join(", ", GlobalConfiguration.LockableChannelIds) + " ].");
         }
     }
 }

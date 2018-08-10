@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
@@ -24,7 +25,7 @@ namespace Haruna.Modules
             await user.AddRoleAsync(role);
             await ReplyAsync(user.ToString() + " has been muted hahahaa ehehe !!! he's getting his punishment from my onii-sama >////< *aishiteru*");
 
-            _logger.LogInformation(Context.User.ToString() + " muted user " + user.ToString() + " indefinetely.");
+            _logger.LogInformation(Context.User.ToString() + " muted user `" + user.ToString() + "` indefinetely.");
         }
 
         [Alias("m")]
@@ -38,14 +39,36 @@ namespace Haruna.Modules
                 await Task.Factory.StartNew(async () =>
                 {
                     await Task.Delay(timeout);
-                    await user.RemoveRoleAsync(role);
-                    _logger.LogInformation("Unmuted " + user.ToString() + ".");
+                    if(user.RoleIds.Contains(role.Id))
+                        await user.RemoveRoleAsync(role);
+                    _logger.LogInformation("INTERNAL_SYSTEM unmuted user " + user.ToString() + " after " + timeout.TotalMinutes + " minutes.");
                 });
 
                 await ReplyAsync(user.ToString() + " has been muted hahahaa ehehe !!! he's getting his punishment from my onii-sama >////< *aishiteru*");
             });
 
-            _logger.LogInformation(Context.User.ToString() + " muted user " + user.ToString() + " for " + timeout.TotalMinutes + " minutes.");
+            _logger.LogInformation(Context.User.ToString() + " muted user `" + user.ToString() + "` for " + timeout.TotalMinutes + " minutes.");
+        }
+
+        [Alias("um")]
+        [RequireMod]
+        [Command("unmute")]
+        public async Task UnmuteUserAsync(IGuildUser user)
+        {
+            IRole role = Context.Guild.GetRole(ulong.Parse(GlobalConfiguration.MuteRoleId));
+            if(user.RoleIds.Contains(role.Id))
+            {
+                await ReplyAsync("b-baka!!!! i can't u-unmute someone who's freakin not m-m-muted !!!! >:(");
+            }
+            else
+            {
+                await user.RemoveRoleAsync(role).ContinueWith(async (t) =>
+                {
+                    await ReplyAsync("i-i u-u-unmuted `" + user.ToString() + "`!! b-be good onegai~!");
+                });
+
+                _logger.LogInformation(Context.User.ToString() + " unmuted user " + user.ToString() + ".");
+            }
         }
 
         [Alias("b")]
@@ -57,7 +80,7 @@ namespace Haruna.Modules
             await Context.Guild.AddBanAsync(user, 1);
             await ReplyAsync("ojii-sama, i h-h-have b-banned *" + user.ToString() + "* succesfully !!!! where's the reward my panties are expecting!??! >:(");
 
-            _logger.LogInformation(Context.User.ToString() + " banned user " + user.ToString() + " with reason: " + banReason ?? "N/A");
+            _logger.LogInformation(Context.User.ToString() + " banned user `" + user.ToString() + "` with reason: " + banReason ?? "N/A");
         }
 
         [Alias("sb")]
@@ -69,7 +92,7 @@ namespace Haruna.Modules
             await Context.Guild.AddBanAsync(user, 1).ContinueWith(async (t) =>
             {
                 await Context.Guild.RemoveBanAsync(user);
-                await ReplyAsync("ojii-sama, i h-h-have *soft*b-banned *" + user.ToString() + "* succesfully !!!! where's the reward my panties are expecting!??! >:(");
+                await ReplyAsync("ojii-sama, i h-h-have **s-soft-b-banned** `" + user.ToString() + "` succesfully !!!! where's the reward my panties are expecting!??! >:(");
             });
 
             _logger.LogInformation(Context.User.ToString() + " soft-banned user " + user.ToString() + " with reason: " + banReason ?? "N/A");
