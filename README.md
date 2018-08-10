@@ -43,7 +43,3 @@ docker run -d -e HARUNA_TOKEN=[YOUR_BOTS_TOKEN_HERE] \
 | `.unlock` / `.ul` | Resets `Send Messages` and `Add Reactions` permissions for the `@everyone` role in the specified channel, or the current channel if none is specified. | `.ul #general` |
 | `.lock all` / `.l a` | Locks all channels specified in `HARUNA_CHANNELS` | `.l a` |
 | `.unlock all` / `.ul a` | Unlocks all channels specified in `HARUNA_CHANNELS` | `.ul a` |
-
-## Disclaimer
-
-More of this README will soon be filled, and a proper LICENSE will soon be created.
