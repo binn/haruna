@@ -10,14 +10,11 @@ namespace Haruna
         private static string _muteRoleId;
         private static string[] _lockableChannelIds;
 
-        private const string _configurationNotLoadedResource = "Configuration has not been loaded";
-
         public static string[] ModIds => _modIds;
         public static string BotToken => _botToken;
         public static string BotPrefix => _botPrefix;
         public static string MuteRoleId => _muteRoleId;
         public static string[] LockableChannelIds => _lockableChannelIds;
-
 
         public static void LoadConfiguration()
         {
