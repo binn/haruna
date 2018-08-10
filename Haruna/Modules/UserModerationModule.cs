@@ -71,6 +71,20 @@ namespace Haruna.Modules
             }
         }
 
+        [Alias("k")]
+        [RequireMod]
+        [Command("kick")]
+        public async Task KickUserAsync(IGuildUser user, [Remainder] string reason = null)
+        {
+            string fullReason = Context.User.ToString() + " - " + reason ?? "No reason provided";
+            await user.KickAsync(reason).ContinueWith(async (t) =>
+            {
+                await ReplyAsync("hh-hai!!! i k-kicked `" + user.ToString() + "` f-from the g-g-guild f-for you!!!! <3");
+            });
+
+            _logger.LogInformation(Context.User.ToString() + " kicked user " + user.ToString() + " with reason " + reason ?? "N/A");
+        }
+
         [Alias("b")]
         [RequireMod]
         [Command("ban")]

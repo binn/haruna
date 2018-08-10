@@ -41,11 +41,14 @@ namespace Haruna
             _commandService = new CommandService(_commandServiceConfig);
 
             _client.MessageReceived += HandleCommandAsync;
+            _client.UserJoined += GlobalEvents.HandleUserJoinAsync;
             await _commandService.AddModulesAsync(Assembly.GetEntryAssembly());
 
+            _logger.LogDebug("Haruna has been loaded with all modules and commands.");
             await _client.LoginAsync(TokenType.Bot, GlobalConfiguration.BotToken, validateToken: true);
             await _client.StartAsync();
 
+            _logger.LogInformation("Haruna has started and is running.");
             await Task.Delay(-1);
         }
 
