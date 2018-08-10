@@ -1,10 +1,7 @@
 <p align="center">
-    <img src="https://cdn.discordapp.com/avatars/477192814405484564/42cafea631db81597aa908ca353fd8b9.jpg?size=256" style="border-radius: 28%" alt="Haruna Logo" height="256px" width="256px"></img>
+    <img src="https://cdn.discordapp.com/avatars/477192814405484564/42cafea631db81597aa908ca353fd8b9.jpg?size=256" style="border-radius: 28%" alt="Haruna Logo" height="128px" width="128px"></img>
 </p>
 <br/>
-
-# Haruna
-
 <p align="center">
 <a href="https://travis-ci.org/binsenpai/haruna">
     <img src="https://travis-ci.org/binsenpai/haruna.svg?branch=master" alt="Build status" />
@@ -14,6 +11,8 @@
   </a>
   <br/>
 </p>
+
+# Haruna
 
 Haruna is *the* lightweight and simple moderation bot. She's only got a handful of commands and emergency server management. She's designed and made for the "[cakechan](https://discord.gg/QEtRdka)" server, a Discord server owned by a friend of mine.
 
