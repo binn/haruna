@@ -56,7 +56,7 @@ namespace Haruna.Modules
         public async Task UnmuteUserAsync(IGuildUser user)
         {
             IRole role = Context.Guild.GetRole(ulong.Parse(GlobalConfiguration.MuteRoleId));
-            if(user.RoleIds.Contains(role.Id))
+            if(!user.RoleIds.Contains(role.Id))
             {
                 await ReplyAsync("b-baka!!!! i can't u-unmute someone who's freakin not m-m-muted !!!! >:(");
             }
