@@ -27,11 +27,22 @@ docker run -d -e HARUNA_TOKEN=[YOUR_BOTS_TOKEN_HERE] \
 | `HARUNA_PREFIX` | The prefix of Haruna's commands. Haruna also accepts @mention commands. |
 | `HARUNA_MUTE` | The ID of the role to give to muted users. |
 | `HARUNA_MODS` | A list of role IDs seperated by a semicolon (`;`) that have moderation permissions |
-| `HARUNA_CHANNELS` | A list of channel IDs seperated by a semicolon (`;`) that will get locked when using the `lock` command. |
+| `HARUNA_CHANNELS` | A list of channel IDs seperated by a semicolon (`;`) that will get locked when using the `lock all` command. |
 
 ## Commands
 
-- Coming soon.
+| Base Command | Description | Example |
+|--------------|-------------|---------|
+| `.mute` / `.m` | Assigns `HARUNA_MUTE` role to a given user. Mute is permanent unless otherwhise specified | `.m @user` / `.m @user 10` |
+| `.unmute` / `.um` | Unmutes user (Unassigns `HARUNA_MUTE` role.) | `.um @user` |
+| `.prune` / `.p` | Deletes last `x` messages from the current channel, or messages from a specified user in the last `x` messages if specified. | `.p 10` / `.p 10 @user` |
+| `.kick` / `.k` | Kicks given user. Any text after mention is used as a reason in the guild's Audit Log. | `.k @user spamming` |
+| `.ban` / `.b` | Bans given user. Any text after mention is used as a reason in the guild's Audit Log. | `.b @user spamming` |
+| `.softban` / `.sb` | Bans and then immidiately unbans given user. Any text after mention is used as a reason in the guild's Audit Log. | `.sb @user spamming` |
+| `.lock` / `.l` | Denies `Send Messages` and `Add Reactions` permissions for the `@everyone` role in the specified channel, or the current channel if none is specified. | `.l #general` |
+| `.unlock` / `.ul` | Resets `Send Messages` and `Add Reactions` permissions for the `@everyone` role in the specified channel, or the current channel if none is specified. | `.ul #general` |
+| `.lock all` / `.l a` | Locks all channels specified in `HARUNA_CHANNELS` | `.l a` |
+| `.unlock all` / `.ul a` | Unlocks all channels specified in `HARUNA_CHANNELS` | `.ul a` |
 
 ## Disclaimer
 
