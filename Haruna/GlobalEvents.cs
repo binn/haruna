@@ -41,22 +41,6 @@ namespace Haruna
             Console.WriteLine(HarunaWelcome.WelcomeString);
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine("Hello from Haruna!");
-            Console.ForegroundColor = ConsoleColor.Yellow;
-
-            string ender = "]";
-            string starter = "[";
-            string writtenString = starter + string.Empty.PadLeft(30, ' ') + ender;
-            Console.Write(writtenString);
-
-            for (int i = 0; i < 30; i++)
-            {
-                Console.CursorLeft = 0;
-                writtenString = starter + string.Empty.PadLeft(i, '=') + ">".PadRight(30 - i, ' ') + ender;
-                Console.Write(writtenString);
-                await Task.Delay(new Random().Next(30, 256));
-            }
-
-            Console.Write(Environment.NewLine);
             Console.ResetColor();
         }
     }
