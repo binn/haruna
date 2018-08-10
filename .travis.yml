@@ -15,7 +15,7 @@ script:
   - dotnet build
 # Soon we'll setup tests. For now just implement building and publish to docker.
 
-deploy: # This won't run if dotnet build fails.
+after_script: # This won't run if dotnet build fails.
   - dotnet restore # Restore the packages.
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
   - docker build -t binzy/haruna .

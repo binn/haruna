@@ -1,8 +1,15 @@
+[![Haruna Logo](https://cdn.discordapp.com/avatars/477192814405484564/42cafea631db81597aa908ca353fd8b9.jpg?size=256)](https://bin.moe)
+
 # Haruna
+
+[![Build Status](https://travis-ci.org/binsenpai/haruna.svg?branch=master)](https://travis-ci.org/binsenpai/haruna)
+
+[![Docker Status](https://img.shields.io/badge/docker-1.0-blue.svg)](https://hub.docker.com/r/binzy/haruna/)
+
 
 Haruna is *the* lightweight and simple moderation bot. She's only got a handful of commands and emergency server management. She's designed and made for the "[cakechan](https://discord.gg/QEtRdka)" server, a Discord server owned by a friend of mine.
 
-She's simple, easy to run, and is fast. She runs on .NET Core so it's cross-platform!
+She's simple, easy to run, and is fast. She runs on .NET Core so she's also cross-platform!
 
 Haruna relies on the .NET Core runtime, Discord.Net, Microsoft.Extensions.Logging, and Microsoft.Extensions.DependencyInjection. All these packages can be found on NuGet and can be restored using `dotnet restore`.
 
