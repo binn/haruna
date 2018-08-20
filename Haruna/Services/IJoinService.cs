@@ -22,35 +22,14 @@
 
 /* Author: https://github.com/binsenpai */
 
-using System;
 using System.IO;
 using System.Threading.Tasks;
-using Discord.WebSocket;
-using Haruna.Services;
 
-namespace Haruna
+namespace Haruna.Services
 {
-    public class GlobalEvents
+    public interface IJoinService
     {
-        public static async Task HandleUserJoinAsync(SocketGuildUser user, IJoinService joinService)
-        {
-            if (!GlobalConfiguration.JoinImageEnabled)
-                return;
-
-            Stream avatarStream = await joinService.GetStreamFromAvatarUrlAsync(user.GetAvatarUrl());
-            Stream templateStream = await joinService.GenerateWelcomeImageAsync(user.Username, user.Discriminator, avatarStream);
-            avatarStream.Dispose();
-
-            // TODO: Allow configuration of this channel and message to go with the file.
-            await user.Guild.DefaultChannel.SendFileAsync(templateStream, "welcome.png", null);
-        }
-
-        public static void PrintStartupMessage()
-        {
-            Console.WriteLine(HarunaWelcome.WelcomeString);
-            Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.WriteLine("Hello from Haruna!");
-            Console.ResetColor();
-        }
+        Task<Stream> GetStreamFromAvatarUrlAsync(string avatarUrl);
+        Task<Stream> GenerateWelcomeImageAsync(string userName, string tag, Stream avatarStream);
     }
 }

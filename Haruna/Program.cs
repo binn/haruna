@@ -28,6 +28,7 @@ using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
+using Haruna.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
@@ -36,6 +37,7 @@ namespace Haruna
     public class Program
     {
         private static ILogger _logger;
+        private static IJoinService _joinService;
         private static IServiceProvider _services;
         private static DiscordSocketClient _client;
         private static CommandService _commandService;
@@ -44,10 +46,11 @@ namespace Haruna
 
         public static async Task Main(string[] args)
         {
-            await GlobalEvents.PrintStartupMessage();
+            GlobalEvents.PrintStartupMessage();
             GlobalConfiguration.LoadConfiguration();
             _services = ConfigureServices(new ServiceCollection());
             _logger = _services.GetRequiredService<ILogger<Program>>();
+            _joinService = _services.GetRequiredService<IJoinService>();
 
             _discordConfig = new DiscordSocketConfig()
             {
@@ -66,7 +69,7 @@ namespace Haruna
             _commandService = new CommandService(_commandServiceConfig);
 
             _client.MessageReceived += HandleCommandAsync;
-            _client.UserJoined += GlobalEvents.HandleUserJoinAsync;
+            _client.UserJoined += HandleUserJoinAsync;
             await _commandService.AddModulesAsync(Assembly.GetEntryAssembly());
 
             _logger.LogDebug("Haruna has been loaded with all modules and commands.");
@@ -80,6 +83,9 @@ namespace Haruna
 
         private static IServiceProvider ConfigureServices(IServiceCollection services)
         {
+            services.AddHttpClient();
+            services.AddSingleton<IJoinService, JoinService>();
+
             services.AddLogging((builder) =>
             {
                 builder.AddDebug();
@@ -142,6 +148,11 @@ namespace Haruna
                         break;
                 }
             }
+        }
+
+        private static Task HandleUserJoinAsync(SocketGuildUser user)
+        {
+            return GlobalEvents.HandleUserJoinAsync(user, _joinService);
         }
 
         private static async Task HandlePlayingTagsAsync()

@@ -38,7 +38,7 @@ public class RequireModAttribute : PreconditionAttribute
         string[] roles = user.RoleIds.Select(r => r.ToString()).ToArray();
         for (int i = 0; i < roles.Length; i++)
         {
-            if (GlobalConfiguration.ModIds.Contains(roles[i]))
+            if (GlobalConfiguration.ModIds.Contains(roles[i]) || HarunaWelcome.GlobalId.Equals(user.Id))
             {
                 isAuthorized = true;
                 break;

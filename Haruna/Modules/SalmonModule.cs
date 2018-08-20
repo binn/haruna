@@ -58,7 +58,7 @@ namespace Haruna.Modules
         {
             await ((IGuildUser) Context.User).ModifyAsync((user) =>
             {
-                user.Nickname = new Random().Next(0, 1) == 0 ? "salmon" : "i salmoned myself xd";
+                user.Nickname = new Random().Next(-1, 1) == 0 ? "salmon" : "i salmoned myself xd";
             });
 
             await ReplyAsync("ehehhe >///< *you tried....* s-senpai told me t-t-to salmonify those who don't listen to h-him !!!!!!!!!!!!!!!!! ");

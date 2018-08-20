@@ -32,6 +32,7 @@ namespace Haruna
         private static string[] _modIds;
         private static string _botPrefix;
         private static string _muteRoleId;
+        private static bool _joinImageEnabled;
         private static string[] _playingStatusLoop;
         private static string[] _lockableChannelIds;
 
@@ -39,6 +40,7 @@ namespace Haruna
         public static string BotToken => _botToken;
         public static string BotPrefix => _botPrefix;
         public static string MuteRoleId => _muteRoleId;
+        public static bool JoinImageEnabled => _joinImageEnabled;
         public static string[] LockableChannelIds => _lockableChannelIds;
         public static string[] PlayingStatusMessages => _playingStatusLoop;
 
@@ -50,13 +52,14 @@ namespace Haruna
             string unParsedPlaying = Environment.GetEnvironmentVariable("HARUNA_GAMES");
             string localBotPrefix = Environment.GetEnvironmentVariable("HARUNA_PREFIX");
             string lockChannelIds = Environment.GetEnvironmentVariable("HARUNA_CHANNELS");
+            string enableImage = Environment.GetEnvironmentVariable("HARUNA_IMAGE_ENABLED");
 
             if (!string.IsNullOrWhiteSpace(localBotToken))
             {
                 _botToken = localBotToken;
             }
 
-            if(!string.IsNullOrWhiteSpace(localBotPrefix))
+            if (!string.IsNullOrWhiteSpace(localBotPrefix))
             {
                 _botPrefix = localBotPrefix;
             }
@@ -66,13 +69,25 @@ namespace Haruna
                 _muteRoleId = userMutedRoleId;
             }
 
-            if(!string.IsNullOrWhiteSpace(unParsedPlaying))
+            if (!string.IsNullOrWhiteSpace(unParsedPlaying))
             {
                 _playingStatusLoop = unParsedPlaying.Split(';');
             }
             else
             {
                 _playingStatusLoop = new string[0];
+            }
+
+            if (!string.IsNullOrWhiteSpace(enableImage))
+            {
+                enableImage = enableImage.ToLower().Trim();
+                _joinImageEnabled = enableImage == "1" ? true
+                    : enableImage == "true" ? true
+                    : enableImage == "yes" ? true : false;
+            }
+            else
+            {
+                _joinImageEnabled = false;
             }
 
             if (!string.IsNullOrWhiteSpace(unParsedModIds))
@@ -84,7 +99,7 @@ namespace Haruna
                 _modIds = new string[0];
             }
 
-            if(!string.IsNullOrWhiteSpace(lockChannelIds))
+            if (!string.IsNullOrWhiteSpace(lockChannelIds))
             {
                 _lockableChannelIds = lockChannelIds.Split(';');
             }
