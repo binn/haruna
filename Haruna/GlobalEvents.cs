@@ -25,6 +25,7 @@
 using System;
 using System.IO;
 using System.Threading.Tasks;
+using Discord;
 using Discord.WebSocket;
 using Haruna.Services;
 
@@ -37,12 +38,13 @@ namespace Haruna
             if (!GlobalConfiguration.JoinImageEnabled)
                 return;
 
-            Stream avatarStream = await joinService.GetStreamFromAvatarUrlAsync(user.GetAvatarUrl());
+            Stream avatarStream = await joinService.GetStreamFromAvatarUrlAsync(user.GetAvatarUrl(Discord.ImageFormat.Auto, 256));
             Stream templateStream = await joinService.GenerateWelcomeImageAsync(user.Username, user.Discriminator, avatarStream);
             avatarStream.Dispose();
 
             // TODO: Allow configuration of this channel and message to go with the file.
-            await user.Guild.DefaultChannel.SendFileAsync(templateStream, "welcome.png", null);
+            ITextChannel textChannel = (ITextChannel) user.Guild.GetChannel(ulong.Parse(GlobalConfiguration.JoinImageChannel));
+            await textChannel.SendFileAsync(templateStream, "the-salmon-king-welcomes-you.png", null);
         }
 
         public static void PrintStartupMessage()

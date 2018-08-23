@@ -32,6 +32,7 @@ namespace Haruna
         private static string[] _modIds;
         private static string _botPrefix;
         private static string _muteRoleId;
+        private static string _imageChannel;
         private static bool _joinImageEnabled;
         private static string[] _playingStatusLoop;
         private static string[] _lockableChannelIds;
@@ -40,12 +41,17 @@ namespace Haruna
         public static string BotToken => _botToken;
         public static string BotPrefix => _botPrefix;
         public static string MuteRoleId => _muteRoleId;
+        public static string JoinImageChannel => _imageChannel;
         public static bool JoinImageEnabled => _joinImageEnabled;
         public static string[] LockableChannelIds => _lockableChannelIds;
         public static string[] PlayingStatusMessages => _playingStatusLoop;
 
+        // todo: implement gif detection and return gif file
+        // todo: implement custom image configuration
+
         public static void LoadConfiguration()
         {
+            // Move this into a configuration manager without installing new packages
             string unParsedModIds = Environment.GetEnvironmentVariable("HARUNA_MODS");
             string localBotToken = Environment.GetEnvironmentVariable("HARUNA_TOKEN");
             string userMutedRoleId = Environment.GetEnvironmentVariable("HARUNA_MUTE");
@@ -53,6 +59,7 @@ namespace Haruna
             string localBotPrefix = Environment.GetEnvironmentVariable("HARUNA_PREFIX");
             string lockChannelIds = Environment.GetEnvironmentVariable("HARUNA_CHANNELS");
             string enableImage = Environment.GetEnvironmentVariable("HARUNA_IMAGE_ENABLED");
+            string imageChannel = Environment.GetEnvironmentVariable("HARUNA_IMAGE_CHANNEL");
 
             if (!string.IsNullOrWhiteSpace(localBotToken))
             {
@@ -78,6 +85,11 @@ namespace Haruna
                 _playingStatusLoop = new string[0];
             }
 
+            if(!string.IsNullOrWhiteSpace(imageChannel))
+            {
+                _imageChannel = imageChannel.Trim();
+            }
+           
             if (!string.IsNullOrWhiteSpace(enableImage))
             {
                 enableImage = enableImage.ToLower().Trim();

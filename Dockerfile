@@ -8,6 +8,6 @@ RUN dotnet publish -c Release -r debian-x64 -o Build
 
 FROM microsoft/dotnet:2.1-runtime
 COPY --from=build-env Build ./
-RUN apt-get -qq update && apt-get install -y libfontconfig1
+# RUN apt-get -qq update && apt-get install -y libfontconfig1
 # ENTRYPOINT [ "dotnet", "Haruna.dll" ]
 ENTRYPOINT [ "./Haruna" ]

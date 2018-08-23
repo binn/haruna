@@ -23,28 +23,24 @@
 /* Author: https://github.com/binsenpai */
 
 using System;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Net.Http;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using SkiaSharp;
 
 namespace Haruna.Services
 {
     public class JoinService : IJoinService
     {
-        private SKBitmap _template;
-        private readonly SKPaint _paint;
+        private byte[] _template;
         private readonly ILogger _logger;
         private readonly HttpClient _client;
-        private readonly SKPaint _discrimPaint;
 
         public JoinService(IHttpClientFactory httpClientFactory, ILogger<JoinService> logger)
         {
             _logger = logger;
-            _paint = CreateNewPaint(34.0f);  //CreateNewPaint(72.0f);
-            _discrimPaint = CreateNewPaint(34.0f);
             _client = httpClientFactory.CreateClient();
         }
 
@@ -52,49 +48,27 @@ namespace Haruna.Services
         {
             await EnsureTemplateExistsAsync();
 
-            SKBitmap avatar = SKBitmap.Decode(avatarStream);
-            SKBitmap localTemplate = _template.Copy();
-            SKCanvas canvas = new SKCanvas(localTemplate);
+            Bitmap avatar = new Bitmap(new Bitmap(avatarStream), new Size(170, 170));
+            Bitmap localTemplate = new Bitmap(new MemoryStream(_template));
+            Graphics canvas = Graphics.FromImage(localTemplate);
 
-            int currentDelimiter = 0;
-            string userText = string.Empty;
-            string userTextParsable = userName + "#" + tag;
-            for (int textLoc = 0; textLoc < userTextParsable.Length; textLoc++)
-            {
-                if(currentDelimiter == 13)
-                {
-                    currentDelimiter = 0;
-                    userText += Environment.NewLine;
-                }
+            string userText = userName + "#" + tag;
+            canvas.DrawImage(avatar, 66, 79);
+            canvas.DrawString(userText, new Font("Segoe UI Light", 64.0f), Brushes.DarkGray, new PointF(200, 90));
 
-                userText += userTextParsable[textLoc];
-                currentDelimiter++;
-            }
-
-            // Hard-coded for the time being
-            canvas.DrawBitmap(avatar, 66, 79, _paint);
-            canvas.DrawText(userText, 217, 110, _paint);
-            //canvas.DrawText(tag, 436, 86, _discrimPaint);
-            canvas.Flush();
-
-            SKImage image = SKImage.FromBitmap(localTemplate);
-            SKData finalImageData = image.Encode(SKEncodedImageFormat.Png, 90);
-
-            image.Dispose();
-            avatarStream.Dispose();
-            canvas.Dispose();
+            Stream finalStreamData = SaveBitmap(localTemplate);
             localTemplate.Dispose();
             avatar.Dispose();
+            canvas.Dispose();
 
-            return finalImageData.AsStream();
+            return finalStreamData;
         }
 
         private async Task EnsureTemplateExistsAsync()
         {
             if (_template == null)
             {
-                byte[] templateData = await File.ReadAllBytesAsync("salmon_template.png");
-                _template = SKBitmap.Decode(templateData);
+                _template = await File.ReadAllBytesAsync("salmon_template.png");
             }
         }
 
@@ -104,17 +78,13 @@ namespace Haruna.Services
             return await imageStreamResponse.Content.ReadAsStreamAsync();
         }
 
-        private SKPaint CreateNewPaint(float fontSize = 32.0f)
+        private Stream SaveBitmap(Bitmap localTemplate)
         {
-            return new SKPaint()
+            using (MemoryStream stream = new MemoryStream())
             {
-                IsAntialias = true,
-                TextSize = fontSize,
-                Style = SKPaintStyle.Fill,
-                TextAlign = SKTextAlign.Left,
-                Color = SKColors.DarkSlateGray,
-                Typeface = SKTypeface.FromFamilyName("Segoe UI")
-            };
+                localTemplate.Save(stream, ImageFormat.Png);
+                return new MemoryStream(stream.ToArray());
+            }
         }
     }
 }

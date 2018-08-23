@@ -27,11 +27,11 @@ namespace Haruna.Modules
                 return;
             }
 
-            Stream avatarStream = await _joinService.GetStreamFromAvatarUrlAsync(Context.User.GetAvatarUrl());
+            Stream avatarStream = await _joinService.GetStreamFromAvatarUrlAsync(Context.User.GetAvatarUrl(Discord.ImageFormat.Auto, 256));
             Stream templateStream = await _joinService.GenerateWelcomeImageAsync(Context.User.Username, Context.User.Discriminator, avatarStream);
             avatarStream.Dispose();
 
-            await Context.Channel.SendFileAsync(templateStream, "welcome.png", null);
+            await Context.Channel.SendFileAsync(templateStream, "the-salmon-king-welcomes-you.png", null);
         }
     }
 }
