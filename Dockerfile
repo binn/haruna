@@ -10,7 +10,7 @@ FROM ubuntu:bionic
 WORKDIR /app
 COPY --from=build-env /app/Haruna/Build ./
 
-RUN apt-get update && apt-get install curl liblttng-ust0 libssl1.0.0 libkrb5-3 zlib1g libicu60 libunwind8 icu-devtools tar -y
+RUN apt-get update && apt-get install curl liblttng-ust0 libssl1.0.0 libkrb5-3 zlib1g libicu60 libgdiplus libunwind8 icu-devtools tar -y
 
 RUN curl -L --http1.1 http://download.icu-project.org/files/icu4c/62.1/icu4c-62_1-Ubuntu-18.04-x64.tgz --output icu.tgz \
     && tar -xf icu.tgz -C / \
