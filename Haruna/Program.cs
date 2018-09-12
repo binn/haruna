@@ -68,8 +68,8 @@ namespace Haruna
             _client = new DiscordSocketClient(_discordConfig);
             _commandService = new CommandService(_commandServiceConfig);
 
-            _client.MessageReceived += HandleCommandAsync;
             _client.UserJoined += HandleUserJoinAsync;
+            _client.MessageReceived += HandleCommandAsync;
             await _commandService.AddModulesAsync(Assembly.GetEntryAssembly());
 
             _logger.LogDebug("Haruna has been loaded with all modules and commands.");
@@ -97,6 +97,7 @@ namespace Haruna
 
         private static async Task HandleCommandAsync(SocketMessage message)
         {
+            return; // temporary
             SocketUserMessage socketMessage = (SocketUserMessage)message;
             if (message == null || message.Author.IsBot)
                 return;
